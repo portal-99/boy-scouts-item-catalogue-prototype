@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model OrganizationalYear {
+  id    String @id @default(uuid())
+  year  Int
+  name  String?
+}
+
+model Person {
+  id        String @id @default(uuid())
+  fullName  String
+  isActive  Boolean @default(true)
+}
+
+model Item {
+  id                 String   @id @default(uuid())
+  name               String
+  identifier         String?
+  itemType           String
+  quantity           Int      @default(1)
+  availableQuantity  Int      @default(1)
+  status             String   @default("available")
+  createdAt          DateTime @default(now())
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  enteredBy String
+  createdAt DateTime @default(now())
+}
+
+model TransactionItem {
+  id             String   @id @default(uuid())
+  transactionId  String
+  itemId         String
+  quantity       Int      @default(1)
+  dueAt          DateTime
+}
